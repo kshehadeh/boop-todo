@@ -8,7 +8,7 @@ import summary from './commands/summary';
 import login from './commands/login';
 import start from './commands/start';
 import ai from './commands/ai';
-
+import about from './commands/about';
 // Create the main program
 const program = new Command();
 
@@ -26,6 +26,7 @@ summary(program);
 login(program);
 start(program);
 ai(program);
+about(program);
 
 // Parse command line arguments
 program.parse(process.argv);
