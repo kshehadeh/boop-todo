@@ -1,37 +1,25 @@
 name: Release
-
 on:
     push:
-        branches:
-            - main
-        paths-ignore:
-            - "**.md"
-            - ".gitignore"
-            - ".env.example"
-
+        branches: [main]
+        paths-ignore: ["**.md", ".gitignore", ".env.example"]
 jobs:
     build-and-release:
-        if: startsWith(github.event.head_commit.message, 'chore: release')
         runs-on: ubuntu-latest
         permissions:
             contents: write
-
+        if: "${{ contains(github.event.head_commit.message, 'chore: release') }}"
         steps:
             - uses: actions/checkout@v4
-
             - name: Setup Bun
               uses: oven-sh/setup-bun@v1
               with:
                   bun-version: latest
-
             - name: Install dependencies
               run: bun install
-
             - name: Build
               run: bun run build
-
             - name: Create Release
-              id: create_release
               uses: softprops/action-gh-release@v1
               with:
                   files: dist/boop
@@ -39,5 +27,3 @@ jobs:
                   name: Release v${{ github.run_number }}
                   body: |
                       Automated release from commit: ${{ github.event.head_commit.message }}
-                  draft: false
-                  prerelease: false
