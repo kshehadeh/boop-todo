@@ -12,11 +12,13 @@ import about from './commands/about';
 // Create the main program
 const program = new Command();
 
+const version = require("../package.json").version;
+
 // Set up basic information
 program
     .name('boop')   
     .description('A Todoist CLI with purpose')
-    .version('1.0.0');
+    .version(version);
 
 // Register all subcommands
 today(program);
