@@ -5,13 +5,16 @@ import today from './commands/today';
 import create from './commands/create';
 import complete from './commands/complete';
 import summary from './commands/summary';
+import login from './commands/login';
+import start from './commands/start';
+import ai from './commands/ai';
 
 // Create the main program
 const program = new Command();
 
 // Set up basic information
 program
-    .name('boop')
+    .name('boop')   
     .description('A Todoist CLI with purpose')
     .version('1.0.0');
 
@@ -20,6 +23,9 @@ today(program);
 create(program);
 complete(program);
 summary(program);
+login(program);
+start(program);
+ai(program);
 
 // Parse command line arguments
 program.parse(process.argv);

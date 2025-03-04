@@ -2,10 +2,10 @@ import * as mkcert from 'mkcert';
 
 export async function generateCertificate(domain: string, organization: string, days: number) {
     const ca = await mkcert.createCA({
-        organization: organization || 'Development CA',
+        organization: organization || 'iWonder Designs',
         countryCode: 'US',
-        state: 'State',
-        locality: 'Locality',
+        state: 'Maryland',
+        locality: 'Baltimore',
         validity: days
     });
 

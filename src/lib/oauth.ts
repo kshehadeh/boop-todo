@@ -68,7 +68,7 @@ export async function executeOAuthFlowAndReturnAuthInfo({
 
     return new Promise((resolve, reject) => {
         app.get(path, (req: express.Request, res: express.Response) => {
-            const authCode = req.query.code
+            const authCode = req.query.code?.toString()
 
             // Let's see if we have the code
             if (authCode) {
@@ -84,9 +84,12 @@ export async function executeOAuthFlowAndReturnAuthInfo({
 
                 fetch(tokenUrl, {
                     method: 'POST',
-                    body: JSON.stringify(data),
+                    body: new URLSearchParams(data).toString(),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
                 })
-                    .then((response: Response) => response.json())
+                    .then(async (response: Response) => response.json())
                     .then((data: AuthResponse) => {
                         output(`Successfully received token...`)
                         resolve(data)

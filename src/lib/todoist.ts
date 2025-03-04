@@ -1,16 +1,12 @@
-#!/usr/bin/env node
-
-import { Command } from "commander";
-
-import ora from "ora";
 import { setTimeout } from "timers/promises";
 import { config } from "dotenv";
 
 import path from "path";
 import { exec } from "child_process";
-import { DateTime } from "luxon";
+import { DateTime, Duration } from "luxon";
 import { ask } from "./openai";
 import { executeOAuthFlowAndReturnAuthInfo } from "./oauth";
+import { AiProvider } from "./config";
 
 // Get the location of this script file and then find the .env file two directories up
 const rootPath = path.resolve(__dirname, "../../")
@@ -20,76 +16,63 @@ const alarmPath = `${rootPath}/assets/sound/mixkit-bell-notification-933.wav`;
 config({ path: dotenvPath });
 
 // Todoist API token (replace this with an environment variable for security)
-const TODOIST_API_TOKEN = process.env.TODOIST_TOKEN;
 const TODOIST_CLIENT_ID = process.env.TODOIST_CLIENT_ID;
 const TODOIST_CLIENT_SECRET = process.env.TODOIST_CLIENT_SECRET;
 const TODOIST_API_BASE = "https://api.todoist.com/rest/v2";
 const TODOIST_SYNC_API_BASE = "https://api.todoist.com/sync/v9";
 
-export async function connectWithOauthToTodist() {
-    const spinner = ora("Connecting to Todoist...").start();
-
+export async function connectWithOauthToTodist(output: (message: string) => void) {
     const response = await executeOAuthFlowAndReturnAuthInfo({
         clientId: TODOIST_CLIENT_ID || '',
         clientSecret: TODOIST_CLIENT_SECRET || '',
         tokenUrl: "https://todoist.com/oauth/access_token",
         authUrl: "https://todoist.com/oauth/authorize",
         audience: "",
-        redirectUrl: "http://localhost:3000",
+        redirectUrl: "http://localhost:3000/",
         scopes: ["data:read_write"],
         includeState: true,
         includePrompt: true,
-        output: (message: string) => {
-            spinner.text = message;
-        },
+        output,
     })
-    if (!response) {
-        spinner.fail("Failed to connect to Todoist.");
-        process.exit(1);
+    if (!response) {        
+        return null;
     }
-
-    spinner.succeed(`Connected to Todoist: ${response.access_token}`);
 
     return response.access_token;
 }
 
 // Helper function to fetch completed tasks from Todoist
-export async function fetchCompletedTasks() {
-    const spinner = ora("Fetching completed tasks from Todoist...").start();
-    try {
-        const bearer = await connectWithOauthToTodist();
-        console.log("Bearer:", bearer);
-        const twoWeeksAgo = DateTime.now().minus({ weeks: 2 }).toISO();
+export async function fetchCompletedTasks(token: string, weeks: number = 2) {    
+    try {        
+        const weeksAgo = DateTime.now().minus({ weeks }).toISO();
         const response = await fetch(`${TODOIST_SYNC_API_BASE}/completed/get_all`, {
             method: 'POST',
             headers: { 
-                'Authorization': `Bearer ${bearer}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ since: twoWeeksAgo }),
+            body: JSON.stringify({ since: weeksAgo }),
         });
         
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        spinner.stop();
         const data = await response.json();
         return data.items;
-    } catch (error) {
-        spinner.fail("Failed to fetch completed tasks.");
+    } catch (error) {        
         console.error((error as Error).message);
         process.exit(1);
     }
 }
 
 // Helper function to summarize tasks using OpenAI
-export async function summarizeTasks(tasks: any[]) {
+export async function summarizeTasks(ai: AiProvider, apiKey: string, tasks: any[], weeks: number = 2) {    
     const taskDescriptions = tasks.map(task => task.content).join("\n");
-    const prompt = `Summarize the following tasks completed in the last 2 weeks:\n\n${taskDescriptions}`;
+    const prompt = `Summarize the following tasks completed in the last ${weeks} weeks:\n\n${taskDescriptions}`;
 
     try {
-        return await ask(prompt);        
+        return await ask(prompt, ai, apiKey);        
     } catch (error) {
         console.error("Failed to summarize tasks using OpenAI:", (error as Error).message);
         process.exit(1);
@@ -97,13 +80,12 @@ export async function summarizeTasks(tasks: any[]) {
 }
 
 // Helper function to fetch tasks from Todoist
-export async function fetchTasks() {
-    const spinner = ora("Fetching tasks from Todoist...").start();
+export async function fetchTasks(token: string) {
     try {
         const response = await fetch(`${TODOIST_API_BASE}/tasks`, {
             method: 'GET',
             headers: { 
-                'Authorization': `Bearer ${TODOIST_API_TOKEN}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -112,23 +94,20 @@ export async function fetchTasks() {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        spinner.stop();
         return await response.json();
     } catch (error) {
-        spinner.fail("Failed to fetch tasks.");
-        console.error((error as Error).message);
-        process.exit(1);
+        throw new Error(`Failed to fetch tasks: ${(error as Error).message}`);
     }
 }
 
-export async function markTaskAsComplete(taskId: string) {
+export async function markTaskAsComplete(token: string, taskId: string) {
     try {
         const response = await fetch(
             `${TODOIST_API_BASE}/tasks/${taskId}/close`,
             {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${TODOIST_API_TOKEN}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             }
@@ -140,20 +119,19 @@ export async function markTaskAsComplete(taskId: string) {
         
         return true;
     } catch (error) {
-        console.error((error as Error).message);
-        return null;
+        throw new Error(`Failed to mark task as complete: ${(error as Error).message}`);        
     }
 }
 
-export async function addComment(taskId: string, comment: string) {
-    const spinner = ora("Adding comment to the task...").start();
+export async function addComment(token: string, taskId: string, comment: string) {
+    
     try {
         const response = await fetch(
             `${TODOIST_API_BASE}/comments`,
             {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${TODOIST_API_TOKEN}`,
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ task_id: taskId, content: comment })
@@ -164,21 +142,18 @@ export async function addComment(taskId: string, comment: string) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        spinner.stop();
     } catch (error) {
-        spinner.fail("Failed to add comment.");
-        console.error((error as Error).message);
-        process.exit(1);
+        throw new Error(`Failed to add comment: ${(error as Error).message}`);
     }
 }
 
-export async function createTask(taskContent: string) {
+export async function createTask(token: string, taskContent: string) {
     const response = await fetch(
         `${TODOIST_API_BASE}/tasks`,
         {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${TODOIST_API_TOKEN}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ content: taskContent })
@@ -192,13 +167,12 @@ export async function createTask(taskContent: string) {
     return await response.json();
 }
 
-export async function getTodayAndOverdueTasks() {
-    const spinner = ora("Fetching today's tasks from Todoist...").start();
+export async function getTodayAndOverdueTasks(token: string) {
     try {
         const response = await fetch(`${TODOIST_API_BASE}/tasks`, {
             method: 'GET',
             headers: { 
-                'Authorization': `Bearer ${TODOIST_API_TOKEN}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -215,12 +189,9 @@ export async function getTodayAndOverdueTasks() {
             return dueDate && dueDate <= today;
         });
 
-        spinner.stop();
         return todayTasks;
     } catch (error) {
-        spinner.fail("Failed to fetch today's tasks.");
-        console.error((error as Error).message);
-        process.exit(1);
+        throw new Error(`Failed to fetch today's tasks: ${(error as Error).message}`);
     }
 }
 
@@ -235,33 +206,32 @@ export async function postOsNotification(title: string, message: string) {
 }
 
 // Timer function
-export async function startTimer(taskName: string, taskId: string, duration: number) {
-    console.log(`⏰ Timer for "${taskName}"...`);
-    console.log(`Duration: ${duration} minute(s)`);
-
-    const countdown = ora({
-        text: `Time Remaining: ${duration} minute(s)`,
-        spinner: "runner",
-    }).start();
+export async function startTimer(token: string, taskName: string, taskId: string, duration: number, events: {
+    onComplete: () => void,
+    onUpdate: (remainingTime: Duration) => void,
+    onError: (error: Error) => void,
+    onStart: (endTime: DateTime) => void,
+}) {
 
     const endTime = DateTime.now().plus({ minutes: duration });
-
+    events.onStart(endTime);
     const updateTimer = async () => {
         const remainingTime = endTime.diff(DateTime.now())
         if (remainingTime.as("seconds") <= 0) {            
-            countdown.stop();            
-
-            postOsNotification("Todoist Timer", `Timer complete for: ${taskName}`);
-            console.log("\n⏰ Time's up! Timer complete for:", taskName);
-            console.log("\u0007");
+            events.onComplete();
             
             if (taskId) {
                 // Add a comment to the task
                 const comment = `Focused for ${duration} minute(s) on this task.`;
-                await addComment(taskId, comment);
+
+                try {
+                    await addComment(token, taskId, comment);
+                } catch (error) {
+                    events.onError(error as Error);
+                }
             }
         } else {
-            countdown.text = `Time Remaining: ${remainingTime.shiftTo('minutes', 'seconds').toHuman()}`;
+            events.onUpdate(remainingTime);            
             setTimeout(1000).then(updateTimer);
         }        
     };

@@ -3,15 +3,17 @@ import { getTodayAndOverdueTasks, markTaskAsComplete } from "../lib/todoist";
 import { console as richConsole } from 'ansie';
 import ora from "ora";
 import { checkbox } from "@inquirer/prompts";
+import { getAndValidateToken, getConfig } from "../lib/config";
 
 // Command: complete-today
 export default function subcommand(program: Command) {      
 program
     .command("complete")
     .description("List today's tasks and mark selected ones as complete")
-    .action(async () => {
+    .action(async (program: Command) => {
         try {
-            const todayTasks = await getTodayAndOverdueTasks();
+            const token = getAndValidateToken(program);
+            const todayTasks = await getTodayAndOverdueTasks(token);
 
             if (todayTasks.length === 0) {
                 richConsole.log("<span bold>No tasks due today or overdue.</span>");
@@ -34,7 +36,7 @@ program
             const completeSpinner = ora("Marking selected tasks as complete...").start();
             try {
                 await Promise.all(
-                    selectedTasks.map((t) => markTaskAsComplete(t))
+                    selectedTasks.map((t) => markTaskAsComplete(token, t))
                 );
                 completeSpinner.succeed("Selected tasks marked as complete.");
             } catch (error) {
