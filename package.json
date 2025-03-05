@@ -10,9 +10,9 @@
   },
   "scripts": {
     "build": "bun run build:linux && bun run build:windows && bun run build:mac",
-    "build:linux": "bun build src/index.ts --compile --outfile dist/boop-linux --target=bun-linux-x64 --env=BUILD_* --minify",
-    "build:windows": "bun build src/index.ts --compile --outfile dist/boop-windows --target=bun-windows-x64 --env=BUILD_* --minify",
-    "build:mac": "bun build src/index.ts --compile --outfile dist/boop-mac --target=bun-darwin-arm64 --env=BUILD_* --minify",
+    "build:linux": "bun build src/index.ts --compile --sourcemap --outfile dist/boop-linux --minify  --target=bun-linux-x64 --env=BUILD_* ",
+    "build:windows": "bun build src/index.ts --compile --sourcemap --outfile dist/boop-windows --minify  --target=bun-windows-x64 --env=BUILD_*",
+    "build:mac": "bun build src/index.ts --compile --sourcemap --outfile dist/boop-mac  --minify --target=bun-darwin-arm64 --env=BUILD_*",
     "start": "node dist/index.js",
     "increment": "bumpp"
   },
