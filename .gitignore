@@ -182,4 +182,6 @@ dist/
 *.swp
 *.swo
 
-boop
+boop-linux
+boop-windows
+boop-mac

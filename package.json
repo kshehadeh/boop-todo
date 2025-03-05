@@ -9,7 +9,10 @@
     "boop": "./dist/index.js"
   },
   "scripts": {
-    "build": "bun build src/index.ts --compile --outfile dist/boop",
+    "build": "bun run build:linux && bun run build:windows && bun run build:mac",
+    "build:linux": "bun build src/index.ts --compile --outfile dist/boop-linux --target=bun-linux-x64 --env=BUILD_* --minify",
+    "build:windows": "bun build src/index.ts --compile --outfile dist/boop-windows --target=bun-windows-x64 --env=BUILD_* --minify",
+    "build:mac": "bun build src/index.ts --compile --outfile dist/boop-mac --target=bun-darwin-arm64 --env=BUILD_* --minify",
     "start": "node dist/index.js",
     "increment": "bumpp"
   },

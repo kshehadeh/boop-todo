@@ -16,15 +16,21 @@ const alarmPath = `${rootPath}/assets/sound/mixkit-bell-notification-933.wav`;
 config({ path: dotenvPath });
 
 // Todoist API token (replace this with an environment variable for security)
-const TODOIST_CLIENT_ID = process.env.TODOIST_CLIENT_ID;
-const TODOIST_CLIENT_SECRET = process.env.TODOIST_CLIENT_SECRET;
+const TODOIST_SECRETS = process.env.BUILD_TODOIST_SECRETS;
 const TODOIST_API_BASE = "https://api.todoist.com/rest/v2";
 const TODOIST_SYNC_API_BASE = "https://api.todoist.com/sync/v9";
 
+export function decodeEmbeddedSecrets()  {
+    const secrets = Buffer.from(TODOIST_SECRETS || '', 'base64').toString('utf-8');
+    const [clientId, clientSecret] = secrets.split(':');
+    return { clientId, clientSecret };
+}
+
 export async function connectWithOauthToTodist(output: (message: string) => void) {
+    const { clientId, clientSecret } = decodeEmbeddedSecrets();
     const response = await executeOAuthFlowAndReturnAuthInfo({
-        clientId: TODOIST_CLIENT_ID || '',
-        clientSecret: TODOIST_CLIENT_SECRET || '',
+        clientId,
+        clientSecret,
         tokenUrl: "https://todoist.com/oauth/access_token",
         authUrl: "https://todoist.com/oauth/authorize",
         audience: "",
