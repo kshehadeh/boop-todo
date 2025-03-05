@@ -1,126 +1,96 @@
-# Boop CLI
+# Boop - A Todoist CLI with Purpose
 
-A command-line interface application with subcommands built using Commander.js.
+## Quick Install
 
-## Installation
+### Unix-like Systems (macOS, Linux)
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/boop.git
-cd boop
-
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-
-# Link the CLI globally (optional)
-npm link
+curl -fsSL https://raw.githubusercontent.com/kshehadeh/boop/main/install.sh | bash
 ```
+
+### Windows
+
+Open PowerShell as Administrator and run:
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/kshehadeh/boop/main/install.ps1'))
+```
+
+## Alternative Installation Methods
+
+### Manual Installation
+
+You can also download the latest binary directly from the [releases page](https://github.com/kshehadeh/boop/releases).
 
 ## Usage
 
 ```bash
-# Show help
-boop --help
+Usage: boop [options] [command]
 
-# Initialize a new project
-boop init --template react --directory my-project
-
-# Generate a component
-boop generate component --name Button
-
-# Deploy to an environment
-boop deploy --environment production
-
-# Check deployment status
-boop deploy status
-
-# Generate SSL certificates
-boop certificate --domain localhost --output ./certs
-```
-
-## Available Commands
-
-### init
-
-Initialize a new project with a template.
-
-```bash
-boop init [options]
+A Todoist CLI with purpose
 
 Options:
-  -t, --template <template>    Template to use (default: "default")
-  -d, --directory <directory>  Directory to initialize in (default: ".")
-  -h, --help                   Display help for command
+  -V, --version            output the version number
+  -h, --help               display help for command
+
+Commands:
+  today                    List tasks that are due today or overdue
+  create                   Create a new Todoist task
+  complete                 List today's tasks and mark selected ones as complete
+  summary [weeks]         Get a summary of tasks completed in the specified time period
+  login                    Login to Todoist
+  start [duration] [name]  Start a timer associated with a todoist task or just start an anonymous timer.
+  ai                       Configure AI provider and API key
+  about                    About Boop
+  help [command]           display help for command
 ```
 
-### generate (alias: g)
+## Command Details
 
-Generate project components.
+### `today`
 
-```bash
-boop generate <type> [options]
+Lists all tasks that are due today or are overdue. This provides a quick overview of your immediate priorities.
 
-Arguments:
-  type                         Type of component to generate (component, model, service)
+### `create`
 
-Options:
-  -n, --name <name>            Name of the component (required)
-  -f, --force                  Force overwrite if component exists (default: false)
-  -p, --path <path>            Path to generate the component in
-  -h, --help                   Display help for command
-```
+Launches an interactive prompt to create a new Todoist task. You can specify task name, due date, priority, and project.
 
-### deploy
+### `complete`
 
-Deploy the application to an environment.
+Shows an interactive list of today's tasks, allowing you to select and mark multiple tasks as complete in one go.
 
-```bash
-boop deploy [options]
+### `summary [weeks]`
 
-Options:
-  -e, --environment <env>      Environment to deploy to (default: "development")
-  -v, --verbose                Enable verbose output (default: false)
-  --dry-run                    Perform a dry run without actual deployment (default: false)
-  -h, --help                   Display help for command
+Generates a report of completed tasks within a specified time period. Options include:
 
-Subcommands:
-  status                       Check deployment status
-```
+- `--weeks`: The number of weeks to look back for completed tasks
 
-### certificate (alias: cert)
+### `login`
 
-Generate SSL certificates using mkcert.
+Initiates the Todoist authentication flow. You'll need to provide your API token to use Boop.
 
-```bash
-boop certificate [options]
+### `start [duration] [name]`
 
-Options:
-  -d, --domain <domain>        Domain name for the certificate (e.g., localhost) (required)
-  -o, --output <directory>     Output directory for certificates (default: "./certs")
-  --days <days>                Validity period in days (default: "365")
-  --organization <name>        Organization name for the certificate
-  -f, --force                  Force overwrite if certificates exist (default: false)
-  -h, --help                   Display help for command
-```
+Starts a timer that can be associated with a Todoist task:
 
-## Examples
+- `duration`: Optional time limit (e.g., "25m" for 25 minutes)
+- `name`: Optional task name or identifier
+If no parameters are provided, it will ask you to pick a todo list item to start on
 
-### HTTPS Server with Generated Certificates
+### `ai`
 
-The repository includes an example HTTPS server that uses certificates generated with the `certificate` command:
+Configure your AI provider settings:
 
-```bash
-# First, generate certificates for localhost
-boop certificate --domain localhost --output ./certs
+- Set up your preferred AI service
+- Configure API keys
 
-# Then run the example HTTPS server
-node examples/https-server.js
-```
+### `about`
 
-This will start a secure HTTPS server on port 3443 that you can access at https://localhost:3443/
+Displays information about Boop, including:
+
+- Version number
+- Author information
+
 
 ## Development
 

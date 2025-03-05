@@ -29,7 +29,7 @@ jobs:
               with:
                   files: |
                       dist/boop-linux
-                      dist/boop-windows
+                      dist/boop-windows.exe
                       dist/boop-mac
                   tag_name: v${{ steps.package-version.outputs.VERSION }}
                   name: Release v${{ steps.package-version.outputs.VERSION }}
