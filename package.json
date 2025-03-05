@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "ansie": "^1.0.4",
+    "boop": ".",
     "commander": "^13.1.0",
     "deepmerge-ts": "^7.1.5",
     "dotenv": "^16.4.7",

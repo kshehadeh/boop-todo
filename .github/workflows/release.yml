@@ -24,6 +24,23 @@ jobs:
               run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
             - name: Build
               run: bun run build
+            - name: Calculate SHA
+              id: shasum
+              run: |
+                echo "MAC_SHA=$(shasum -a 256 dist/boop-mac | cut -d ' ' -f 1)" >> $GITHUB_OUTPUT
+            - name: Update Homebrew Formula
+              run: |
+                VERSION=${{ steps.package-version.outputs.VERSION }} \
+                MAC_SHA=${{ steps.shasum.outputs.MAC_SHA }} \
+                envsubst < homebrew/Formula/boop.rb > homebrew/Formula/boop.rb.tmp
+                mv homebrew/Formula/boop.rb.tmp homebrew/Formula/boop.rb
+            - name: Commit and Push Formula
+              run: |
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                git config --global user.name "github-actions[bot]"
+                git add homebrew/Formula/boop.rb
+                git commit -m "chore: update homebrew formula for v${{ steps.package-version.outputs.VERSION }}"
+                git push
             - name: Create Release
               uses: softprops/action-gh-release@v1
               with:
@@ -35,3 +52,10 @@ jobs:
                   name: Release v${{ steps.package-version.outputs.VERSION }}
                   body: |
                       Automated release from commit: ${{ github.event.head_commit.message }}
+                      
+                      ## Installation
+                      
+                      ```bash
+                      brew tap kshehadeh/boop
+                      brew install boop
+                      ```
