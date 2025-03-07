@@ -1,7 +1,8 @@
 import { Command } from "commander";
-import { getTodayAndOverdueTasks } from "../lib/todoist";
-import { console as richConsole } from 'ansie';
+import { getActiveTasks, markTaskAsComplete, addComment, startTimer, renderTask, Task } from "../lib/todoist";
+import { ask, console as richConsole } from 'ansie';
 import { getAndValidateToken } from "../lib/config";
+import { runTimer } from "../lib/timer";
 export default function subcommand(program: Command) {
     program
         .command("today")
@@ -9,17 +10,31 @@ export default function subcommand(program: Command) {
         .action(async () => {
             try {
                 const token = getAndValidateToken(program);
-                const todayTasks = await getTodayAndOverdueTasks(token);
+                const todayTasks = await getActiveTasks(token, ["today", "overdue"], "due_date", "asc");
 
                 if (todayTasks.length === 0) {
                     richConsole.log("<span bold>No tasks due today or overdue.</span>");
                 } else {
-                    richConsole.log('<h2>Tasks due today (⏳) or overdue (🚨):</h2>');
-                    const today = new Date().toISOString().split("T")[0];
-                    richConsole.log(`<ul>${todayTasks.map((task: any) => {
-                        const overdue = task.due.date < today;
-                        return `<li>${overdue ? "🔴" : "🟢"} ${task.content} (Due: ${task.due.date})</li>`;
-                    }).join("")}</ul>`);
+                    const task = await ask.selectEx<Task>("Pick a task to take action:",
+                        todayTasks.map((task: Task) =>
+                            ({ name: task.content, value: task })));
+
+                    if (task) {
+                        renderTask(task);
+
+                        const action = await ask.select("Pick an action:", [
+                            "Mark as complete", "Add a comment", "Start timer"]);
+
+                        if (action === "Mark as complete") {
+                            await markTaskAsComplete(token, task.id);
+                        } else if (action === "Add a comment") {
+                            const comment = await ask.text("Enter a comment:");
+                            await addComment(token, task.id, comment);
+                        } else if (action === "Start timer") {
+                            const duration = await ask.text("Enter a duration in minutes:");
+                            await runTimer(token, task.id, parseInt(duration));
+                        }
+                    }
                 }
             } catch (error) {
                 console.error((error as Error).message);

@@ -91,6 +91,37 @@ Displays information about Boop, including:
 - Version number
 - Author information
 
+### `list`
+
+Lists all tasks in your Todoist account with the option to filter on several properties
+
+**-f --filter:**
+
+Filter tasks by a specific property (e.g., "priority:1").  This is a variadic argument, so you can specify multiple filters.
+
+- priorty:1, priority:2, priority:3, priority:4
+- project:<project_name>
+- section:<section_name>
+- label:<label_name>
+- today: Show only tasks due today
+- overdue: Show only tasks that are overdue
+- completed: Show only completed tasks  
+- search:<search_term>: Search for tasks that contain the search term
+
+**-s --sort:**
+
+Sort tasks by a specific property (e.g., "priority").
+
+- priority
+- due_date
+- created
+
+**-o --order:**
+
+Order tasks in ascending or descending order (default is ascending).
+
+- asc
+- desc
 
 ## Development
 
