@@ -2,7 +2,7 @@
   "name": "boop",
   "module": "index.ts",
   "type": "module",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "CLI application with subcommands",
   "main": "dist/index.js",
   "bin": {
