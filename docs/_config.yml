@@ -1,6 +1,7 @@
 title: Boop Documentation
 description: Documentation for Boop - A Todoist CLI with Purpose
 theme: jekyll-theme-cayman
+repository: kshehadeh/boop
 markdown: kramdown
 plugins:
   - jekyll-seo-tag
