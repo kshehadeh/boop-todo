@@ -1,0 +1,109 @@
+@import "{{ site.theme }}";
+
+// Custom styles for Boop documentation
+
+// Color variables
+$boop-primary: #4a86e8;
+$boop-secondary: #6aa84f;
+$boop-dark: #333333;
+$boop-light: #f9f9f9;
+
+// Base styles
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: $boop-dark;
+}
+
+// Header styles
+.page-header {
+  background-color: $boop-primary;
+  background-image: linear-gradient(120deg, $boop-primary, $boop-secondary);
+}
+
+// Link styles
+a {
+  color: $boop-primary;
+  
+  &:hover {
+    color: darken($boop-primary, 15%);
+    text-decoration: underline;
+  }
+}
+
+// Code blocks
+pre, code {
+  background-color: $boop-light;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+}
+
+pre {
+  padding: 16px;
+  overflow: auto;
+  
+  code {
+    border: none;
+  }
+}
+
+// Command styling
+.command-name {
+  font-weight: bold;
+  color: $boop-primary;
+}
+
+// Navigation
+.site-nav {
+  margin-bottom: 20px;
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+    li {
+      a {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: $boop-light;
+        border-radius: 4px;
+        text-decoration: none;
+        
+        &:hover {
+          background-color: darken($boop-light, 5%);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@media screen and (max-width: 42em) {
+  .site-nav ul {
+    flex-direction: column;
+  }
+}
+
+// Tables
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  
+  th, td {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+  }
+  
+  th {
+    background-color: $boop-light;
+    font-weight: bold;
+  }
+  
+  tr:nth-child(even) {
+    background-color: lighten($boop-light, 2%);
+  }
+} 

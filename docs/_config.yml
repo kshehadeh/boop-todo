@@ -1,0 +1,20 @@
+title: Boop Documentation
+description: Documentation for Boop - A Todoist CLI with Purpose
+theme: jekyll-theme-cayman
+markdown: kramdown
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Navigation
+nav:
+  - title: Home
+    url: /
+  - title: Installation
+    url: /installation/
+  - title: Commands
+    url: /commands/
+  - title: Examples
+    url: /examples/
+  - title: GitHub
+    url: https://github.com/kshehadeh/boop 

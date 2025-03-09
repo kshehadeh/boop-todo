@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Installation | Boop Documentation</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Installation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for Boop - A Todoist CLI with Purpose" />
+<meta property="og:description" content="Documentation for Boop - A Todoist CLI with Purpose" />
+<link rel="canonical" href="http://localhost:4000/installation.html" />
+<meta property="og:url" content="http://localhost:4000/installation.html" />
+<meta property="og:site_name" content="Boop Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Installation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for Boop - A Todoist CLI with Purpose","headline":"Installation","url":"http://localhost:4000/installation.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=ae1809c753abcbac22449d440e15383c38c185cb">
+    <!-- Custom head content -->
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/site.webmanifest">
+
+<!-- Open Graph / Social Media Meta Tags -->
+<meta property="og:title" content="Installation">
+<meta property="og:description" content="Documentation for Boop - A Todoist CLI with Purpose">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/installation.html">
+<meta property="og:image" content="http://localhost:4000/assets/images/boop-social-card.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Installation">
+<meta name="twitter:description" content="Documentation for Boop - A Todoist CLI with Purpose">
+<meta name="twitter:image" content="http://localhost:4000/assets/images/boop-social-card.png">
+
+<!-- Additional SEO -->
+<meta name="author" content="Karim Shehadeh">
+<meta name="keywords" content="boop, todoist, cli, task management, productivity, command line">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Highlight the current page in navigation
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.site-nav a');
+    
+    navLinks.forEach(link => {
+      const linkPath = link.getAttribute('href');
+      if (currentPath === linkPath || (currentPath.endsWith('/') && currentPath.slice(0, -1) === linkPath)) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script> 
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Installation</h1>
+      <h2 class="project-tagline">Documentation for Boop - A Todoist CLI with Purpose</h2>
+      
+        <a href="https://github.com/kshehadeh/boop" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <nav class="site-nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/installation">Installation</a></li>
+          <li><a href="/commands">Commands</a></li>
+          <li><a href="/examples">Examples</a></li>
+          <li><a href="/ai-integration">AI Integration</a></li>
+          <li><a href="https://github.com/kshehadeh/boop">GitHub</a></li>
+        </ul>
+      </nav>
+
+      <h1 id="installing-boop">Installing Boop</h1>
+
+<p>Boop can be installed on various operating systems using different methods. Choose the one that works best for you.</p>
+
+<h2 id="quick-install">Quick Install</h2>
+
+<h3 id="unix-like-systems-macos-linux">Unix-like Systems (macOS, Linux)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/kshehadeh/boop/main/install.sh | bash
+</code></pre></div></div>
+
+<p>This script will:</p>
+<ol>
+  <li>Download the appropriate binary for your system</li>
+  <li>Place it in a suitable location in your PATH</li>
+  <li>Make it executable</li>
+</ol>
+
+<h3 id="windows">Windows</h3>
+
+<p>Open PowerShell as Administrator and run:</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Set-ExecutionPolicy</span><span class="w"> </span><span class="nx">Bypass</span><span class="w"> </span><span class="nt">-Scope</span><span class="w"> </span><span class="nx">Process</span><span class="w"> </span><span class="nt">-Force</span><span class="p">;</span><span class="w"> </span><span class="p">[</span><span class="n">System.Net.ServicePointManager</span><span class="p">]::</span><span class="n">SecurityProtocol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="n">System.Net.ServicePointManager</span><span class="p">]::</span><span class="n">SecurityProtocol</span><span class="w"> </span><span class="o">-bor</span><span class="w"> </span><span class="nx">3072</span><span class="p">;</span><span class="w"> </span><span class="n">iex</span><span class="w"> </span><span class="p">((</span><span class="n">New-Object</span><span class="w"> </span><span class="nx">System.Net.WebClient</span><span class="p">)</span><span class="o">.</span><span class="nf">DownloadString</span><span class="p">(</span><span class="s1">'https://raw.githubusercontent.com/kshehadeh/boop/main/install.ps1'</span><span class="p">))</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="manual-installation">Manual Installation</h2>
+
+<p>If you prefer to install manually:</p>
+
+<ol>
+  <li>Download the latest binary for your platform from the <a href="https://github.com/kshehadeh/boop/releases">releases page</a></li>
+  <li>For Unix-like systems:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x boop-<span class="k">*</span>
+<span class="nb">sudo mv </span>boop-<span class="k">*</span> /usr/local/bin/boop
+</code></pre></div>    </div>
+  </li>
+  <li>For Windows:
+    <ul>
+      <li>Place the executable in a directory that’s in your PATH</li>
+      <li>Rename it to <code class="language-plaintext highlighter-rouge">boop.exe</code> if needed</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="verifying-installation">Verifying Installation</h2>
+
+<p>To verify that Boop was installed correctly, open a new terminal window and run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boop <span class="nt">--version</span>
+</code></pre></div></div>
+
+<p>You should see the current version number of Boop displayed.</p>
+
+<h2 id="first-time-setup">First-time Setup</h2>
+
+<p>After installation, you’ll need to authenticate with Todoist:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boop login
+</code></pre></div></div>
+
+<p>Follow the prompts to enter your Todoist API token. You can find your API token in the Todoist web app under Settings &gt; Integrations &gt; API token.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/kshehadeh/boop">boop</a> is maintained by <a href="https://github.com/kshehadeh">kshehadeh</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html> 

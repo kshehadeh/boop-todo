@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>AI Integration | Boop Documentation</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="AI Integration" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Documentation for Boop - A Todoist CLI with Purpose" />
+<meta property="og:description" content="Documentation for Boop - A Todoist CLI with Purpose" />
+<link rel="canonical" href="http://localhost:4000/ai-integration.html" />
+<meta property="og:url" content="http://localhost:4000/ai-integration.html" />
+<meta property="og:site_name" content="Boop Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="AI Integration" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Documentation for Boop - A Todoist CLI with Purpose","headline":"AI Integration","url":"http://localhost:4000/ai-integration.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=ae1809c753abcbac22449d440e15383c38c185cb">
+    <!-- Custom head content -->
+
+<!-- Favicon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+<link rel="manifest" href="/assets/images/site.webmanifest">
+
+<!-- Open Graph / Social Media Meta Tags -->
+<meta property="og:title" content="AI Integration">
+<meta property="og:description" content="Documentation for Boop - A Todoist CLI with Purpose">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/ai-integration.html">
+<meta property="og:image" content="http://localhost:4000/assets/images/boop-social-card.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Integration">
+<meta name="twitter:description" content="Documentation for Boop - A Todoist CLI with Purpose">
+<meta name="twitter:image" content="http://localhost:4000/assets/images/boop-social-card.png">
+
+<!-- Additional SEO -->
+<meta name="author" content="Karim Shehadeh">
+<meta name="keywords" content="boop, todoist, cli, task management, productivity, command line">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Highlight the current page in navigation
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.site-nav a');
+    
+    navLinks.forEach(link => {
+      const linkPath = link.getAttribute('href');
+      if (currentPath === linkPath || (currentPath.endsWith('/') && currentPath.slice(0, -1) === linkPath)) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script> 
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">AI Integration</h1>
+      <h2 class="project-tagline">Documentation for Boop - A Todoist CLI with Purpose</h2>
+      
+        <a href="https://github.com/kshehadeh/boop" class="btn">View on GitHub</a>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <nav class="site-nav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/installation">Installation</a></li>
+          <li><a href="/commands">Commands</a></li>
+          <li><a href="/examples">Examples</a></li>
+          <li><a href="/ai-integration">AI Integration</a></li>
+          <li><a href="https://github.com/kshehadeh/boop">GitHub</a></li>
+        </ul>
+      </nav>
+
+      <h1 id="ai-integration-in-boop">AI Integration in Boop</h1>
+
+<p>Boop includes AI capabilities to enhance your task management experience. This guide explains how to set up and use the AI features.</p>
+
+<h2 id="setting-up-ai">Setting Up AI</h2>
+
+<p>To configure your AI provider:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boop ai
+</code></pre></div></div>
+
+<p>This interactive command will guide you through:</p>
+
+<ol>
+  <li>Selecting an AI provider (currently supports OpenAI)</li>
+  <li>Entering your API key</li>
+  <li>Configuring additional settings if needed</li>
+</ol>
+
+<h2 id="what-can-ai-do-in-boop">What Can AI Do in Boop?</h2>
+
+<p>The AI integration in Boop can help with several aspects of task management:</p>
+
+<h3 id="task-analysis">Task Analysis</h3>
+
+<ul>
+  <li>Analyze your task patterns</li>
+  <li>Identify potential bottlenecks in your workflow</li>
+  <li>Suggest task prioritization based on your completion history</li>
+</ul>
+
+<h3 id="natural-language-processing">Natural Language Processing</h3>
+
+<ul>
+  <li>Create tasks using natural language</li>
+  <li>Extract due dates, priorities, and projects from your descriptions</li>
+  <li>Understand context and categorize tasks appropriately</li>
+</ul>
+
+<h3 id="productivity-insights">Productivity Insights</h3>
+
+<ul>
+  <li>Generate reports on your productivity trends</li>
+  <li>Provide suggestions for improving your task management</li>
+  <li>Identify optimal times for different types of tasks</li>
+</ul>
+
+<h2 id="example-ai-usage">Example AI Usage</h2>
+
+<p>Here are some examples of how to leverage the AI features:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create a task with natural language processing</span>
+boop create <span class="s2">"Schedule team meeting for next Tuesday at 2pm with high priority"</span>
+
+<span class="c"># Get AI-powered insights on your completed tasks</span>
+boop summary <span class="nt">--weeks</span> 2 <span class="nt">--ai-analysis</span>
+
+<span class="c"># Let AI suggest task prioritization</span>
+boop list <span class="nt">--ai-prioritize</span>
+</code></pre></div></div>
+
+<h2 id="privacy-considerations">Privacy Considerations</h2>
+
+<p>When using AI features:</p>
+
+<ul>
+  <li>Your task data is sent to the configured AI provider</li>
+  <li>API keys are stored securely on your local machine</li>
+  <li>No data is permanently stored on external servers beyond what’s needed for processing</li>
+</ul>
+
+<p>You can disable AI features at any time by running:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boop ai <span class="nt">--disable</span>
+</code></pre></div></div>
+
+<h2 id="supported-ai-models">Supported AI Models</h2>
+
+<p>Currently, Boop supports:</p>
+
+<ul>
+  <li>OpenAI GPT models (GPT-3.5, GPT-4)</li>
+  <li>More providers will be added in future updates</li>
+</ul>
+
+<h2 id="troubleshooting-ai-features">Troubleshooting AI Features</h2>
+
+<p>If you encounter issues with AI features:</p>
+
+<ol>
+  <li>Verify your API key is correct:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boop ai <span class="nt">--verify</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Check your API usage limits with your provider</p>
+  </li>
+  <li>
+    <p>Ensure you have a stable internet connection</p>
+  </li>
+  <li>Try updating to the latest version of Boop:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># For Unix-like systems</span>
+curl <span class="nt">-fsSL</span> https://raw.githubusercontent.com/kshehadeh/boop/main/install.sh | bash
+   
+<span class="c"># For Windows</span>
+<span class="c"># Run the PowerShell installation script again</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>The AI features in Boop are continuously improving. Check for updates regularly to access new capabilities.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/kshehadeh/boop">boop</a> is maintained by <a href="https://github.com/kshehadeh">kshehadeh</a>.</span>
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
+</html> 

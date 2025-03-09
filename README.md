@@ -22,6 +22,16 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 You can also download the latest binary directly from the [releases page](https://github.com/kshehadeh/boop/releases).
 
+## Documentation
+
+For comprehensive documentation, visit our [GitHub Pages site](https://kshehadeh.github.io/boop/).
+
+The documentation includes:
+- Detailed installation instructions
+- Command reference
+- Usage examples
+- AI integration guide
+
 ## Usage
 
 ```bash
@@ -134,6 +144,13 @@ Displays information about Boop, including:
 ## Development
 
 To add a new command, create a new file in the `src/commands` directory and register it in `src/index.ts`.
+
+### Documentation Development
+
+The documentation site is built with Jekyll and GitHub Pages. To work on the documentation:
+
+1. Navigate to the `docs` directory
+2. Follow the instructions in the [docs README](./docs/README.md)
 
 ## License
 
