@@ -65,10 +65,6 @@ Generates a report of completed tasks within a specified time period. Options in
 
 - `--weeks`: The number of weeks to look back for completed tasks
 
-### `login`
-
-Initiates the Todoist authentication flow. You'll need to provide your API token to use Boop.
-
 ### `start [duration] [name]`
 
 Starts a timer that can be associated with a Todoist task:
@@ -76,20 +72,6 @@ Starts a timer that can be associated with a Todoist task:
 - `duration`: Optional time limit (e.g., "25m" for 25 minutes)
 - `name`: Optional task name or identifier
 If no parameters are provided, it will ask you to pick a todo list item to start on
-
-### `ai`
-
-Configure your AI provider settings:
-
-- Set up your preferred AI service
-- Configure API keys
-
-### `about`
-
-Displays information about Boop, including:
-
-- Version number
-- Author information
 
 ### `list`
 
@@ -122,6 +104,32 @@ Order tasks in ascending or descending order (default is ascending).
 
 - asc
 - desc
+
+### `auth login`
+
+Initiates the Todoist authentication flow. You'll need to provide your API token to use Boop.
+
+### `auth status`
+
+Determines if the user is currently logged in.
+
+### `auth logout`
+
+Logs the user out of Todoist.
+
+### `ai`
+
+Configure your AI provider settings:
+
+- Set up your preferred AI service
+- Configure API keys
+
+### `about`
+
+Displays information about Boop, including:
+
+- Version number
+- Author information
 
 ## Development
 
