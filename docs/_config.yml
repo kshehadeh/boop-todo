@@ -2,6 +2,9 @@ title: Boop Documentation
 description: Documentation for Boop - A Todoist CLI with Purpose
 theme: jekyll-theme-cayman
 repository: kshehadeh/boop
+# Add these lines for proper URL handling
+baseurl: "/boop" # the subpath of your site, e.g. /blog
+url: "https://kshehadeh.github.io" # the base hostname & protocol
 markdown: kramdown
 plugins:
   - jekyll-seo-tag

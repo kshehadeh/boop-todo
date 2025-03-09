@@ -19,7 +19,7 @@ Boop is a powerful command-line interface (CLI) for Todoist that helps you manag
 
 ## Getting Started
 
-1. [Install Boop](./installation.md) on your system
+1. [Install Boop]({{ site.baseurl }}/installation) on your system
 2. Run `boop login` to authenticate with your Todoist account
 3. Try `boop today` to see your current tasks
 
