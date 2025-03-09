@@ -47,6 +47,68 @@ export const TaskSchema = z.object({
     url: z.string()
 });
 
+export const ProductivityStatsSchema = z.object({
+    karma_last_update: z.number().optional(),
+    karma_trend: z.string().optional(),
+    days_items: z.array(z.object({
+        date: z.string().optional(),
+        items: z.array(z.object({
+            completed: z.number().optional(),
+            id: z.string().optional()
+        })).optional(),
+        total_completed: z.number().optional()
+    })).optional(),
+    completed_count: z.number().optional(),
+    karma_update_reasons: z.array(z.object({
+        positive_karma_reasons: z.array(z.number()).optional(),
+        new_karma: z.number().optional(),
+        negative_karma: z.number().optional(),
+        positive_karma: z.number().optional(),
+        negative_karma_reasons: z.array(z.unknown()).optional(),
+        time: z.string().optional()
+    })).optional(),
+    karma: z.number().optional(),
+    week_items: z.array(z.object({
+        date: z.string().optional(),
+        items: z.array(z.object({
+            completed: z.number().optional(),
+            id: z.string().optional()
+        })).optional(),
+        total_completed: z.number().optional()
+    })).optional(),
+    project_colors: z.record(z.string()).optional(),
+    goals: z.object({
+        karma_disabled: z.number().optional(),
+        user_id: z.string().optional(),
+        max_weekly_streak: z.object({
+            count: z.number().optional(),
+            start: z.string().optional(),
+            end: z.string().optional()
+        }).optional(),
+        ignore_days: z.array(z.number()).optional(),
+        vacation_mode: z.number().optional(),
+        current_weekly_streak: z.object({
+            count: z.number().optional(),
+            start: z.string().optional(),
+            end: z.string().optional()
+        }).optional(),
+        current_daily_streak: z.object({
+            count: z.number().optional(),
+            start: z.string().optional(),
+            end: z.string().optional()
+        }).optional(),
+        weekly_goal: z.number().optional(),
+        max_daily_streak: z.object({
+            count: z.number().optional(),
+            start: z.string().optional(),
+            end: z.string().optional()
+        }).optional(),
+        daily_goal: z.number().optional()
+    }).optional()
+});
+
+export type ProductivityStats = z.infer<typeof ProductivityStatsSchema>;
+
 export type Task = z.infer<typeof TaskSchema>;
 
 export const CommentSchema = z.object({
@@ -300,6 +362,9 @@ export async function getActiveTasks(token: string, filters: SupportedFilters[] 
         // Filter to tasks that match the search term
         if (filters.includes("search:")) {
             const searchTerm = filters.find((filter) => filter.startsWith("search:"))?.split(":")[1];
+            if (!searchTerm) {
+                throw new Error("Search term not found");
+            }
             tasks = tasks.filter((task: any) => task.content.toLowerCase().includes(searchTerm.toLowerCase()));
         }
 
@@ -333,6 +398,27 @@ export async function renderTask(task: Task, comments?: Comment[]) {
 export async function getSectionByName(token: string, name: string) {
     const sections = await fetchSections(token);
     return sections.find((section: any) => section.name === name);
+}
+
+export async function getProductivityStats(token: string): Promise<ProductivityStats> {
+    const response = await fetch(`${TODOIST_SYNC_API_BASE}/completed/get_stats`, {
+        method: 'GET',
+        headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    const result =  ProductivityStatsSchema.safeParse(json);
+    if (!result.success) {
+        throw new Error(`Failed to parse productivity stats: ${result.error}`);
+    }
+    return result.data;
 }
 
 export async function fetchSections(token: string) {

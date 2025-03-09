@@ -7,7 +7,7 @@ const DEFAULT_WEEKS = 2;
 export default function subcommand(program: Command) {
 program
     .command("summary")
-    .description("Get a summary of tasks completed in the specified time period")
+    .description("Get a summary of tasks completed in the specified time period. Requires AI configuration to be set")
     .option('-w, --weeks <number>', 'number of weeks to look back', String(DEFAULT_WEEKS))
     .action(async (options) => {
         const token = getAndValidateToken(program);
