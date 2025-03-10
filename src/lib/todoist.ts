@@ -265,7 +265,7 @@ export async function addComment(token: string, taskId: string, comment: string)
     }
 }
 
-export async function createTask(token: string, taskContent: string) {
+export async function createTask(token: string, taskContent: string, taskDescription?: string) {
     const response = await fetch(
         `${TODOIST_API_BASE}/tasks`,
         {
@@ -274,7 +274,7 @@ export async function createTask(token: string, taskContent: string) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ content: taskContent })
+            body: JSON.stringify({ content: taskContent, description: taskDescription })
         }
     );
     

@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "ansie": "^1.0.6",
+    "chromadb": "^1.10.5",
+    "chromadb-default-embed": "^2.14.0",
     "commander": "^13.1.0",
     "deepmerge-ts": "^7.1.5",
     "dotenv": "^16.4.7",
