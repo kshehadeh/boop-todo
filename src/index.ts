@@ -10,6 +10,7 @@ import start from './commands/start';
 import ai from './commands/ai';
 import about from './commands/about';
 import list from './commands/list';
+import update from './commands/update';
 // Create the main program
 const program = new Command();
 
@@ -31,6 +32,7 @@ start(program);
 ai(program);
 about(program);
 list(program);
+update(program);
 // Parse command line arguments
 program.parse(process.argv);
 

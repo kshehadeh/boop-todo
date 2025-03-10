@@ -52,6 +52,7 @@ Commands:
   start [duration] [name]  Start a timer associated with a todoist task or just start an anonymous timer.
   ai                       Configure AI provider and API key
   about                    About Boop
+  update                   Check for updates and install if available
   help [command]           display help for command
 ```
 
@@ -140,6 +141,19 @@ Displays information about Boop, including:
 
 - Version number
 - Author information
+
+### `update`
+
+Checks for updates to Boop and installs them if available.
+
+```bash
+boop update
+```
+
+Options:
+- `-f, --force`: Force update even if already on the latest version
+
+This command will check if a newer version of Boop is available, and if so, prompt you to install it. The update process will download and install the latest version automatically.
 
 ## Development
 
