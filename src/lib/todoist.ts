@@ -187,7 +187,7 @@ export async function fetchCompletedTasks(token: string, weeks: number = 2) {
 // Helper function to summarize tasks using OpenAI
 export async function summarizeTasks(ai: AiProvider, apiKey: string, tasks: any[], weeks: number = 2) {    
     const taskDescriptions = tasks.map(task => task.content).join("\n");
-    const prompt = `Summarize the following tasks completed in the last ${weeks} weeks:\n\n${taskDescriptions}`;
+    const prompt = `Summarize the following tasks completed in the last ${weeks} weeks.  The tasks should be numbered and sorted by date completed:\n\n${taskDescriptions}`;
 
     try {
         return await ask(prompt, ai, apiKey);        

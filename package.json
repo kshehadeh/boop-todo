@@ -14,7 +14,7 @@
     "build:windows": "bun build src/index.ts --compile --sourcemap --outfile dist/boop-windows --minify  --target=bun-windows-x64 --env=BUILD_*",
     "build:mac": "bun build src/index.ts --compile --sourcemap --outfile dist/boop-mac  --minify --target=bun-darwin-arm64 --env=BUILD_*",
     "start": "node dist/index.js",
-    "increment": "bumpp"
+    "release": "bumpp"
   },
   "dependencies": {
     "ansie": "^1.0.6",

@@ -58,7 +58,7 @@ detect_platform() {
 # Get the latest release version from GitHub
 get_latest_version() {
     local latest_release
-    latest_release=$(curl -s "https://api.github.com/repos/kshehadeh/boop/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+    latest_release=$(curl -s "https://api.github.com/repos/kshehadeh/boop-todo/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
     if [ -z "$latest_release" ]; then
         error "Could not determine the latest version"
     fi
@@ -79,7 +79,7 @@ main() {
 
     step "Downloading boop..."
     local binary_name="boop-${platform}"
-    local download_url="https://github.com/kshehadeh/boop/releases/download/${version}/${binary_name}"
+    local download_url="https://github.com/kshehadeh/boop-todo/releases/download/${version}/${binary_name}"
     
     # Create the bin directory if it doesn't exist
     local install_dir="$HOME/.local/bin"
